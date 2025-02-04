@@ -1,6 +1,6 @@
 import { ApiError } from '@/lib/errors';
 import { sendAudit } from '@/lib/retraced';
-import { sendEvent } from '@/lib/svix';
+// import { sendEvent } from '@/lib/svix';
 import { Role } from '@prisma/client';
 import {
   getTeamMembers,
@@ -78,7 +78,7 @@ const handleDELETE = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const teamMemberRemoved = await removeTeamMember(teamMember.teamId, memberId);
 
-  await sendEvent(teamMember.teamId, 'member.removed', teamMemberRemoved);
+  // await sendEvent(teamMember.teamId, 'member.removed', teamMemberRemoved);
 
   sendAudit({
     action: 'member.remove',

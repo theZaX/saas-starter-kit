@@ -2,7 +2,7 @@ import { sendTeamInviteEmail } from '@/lib/email/sendTeamInviteEmail';
 import { ApiError } from '@/lib/errors';
 import { sendAudit } from '@/lib/retraced';
 import { getSession } from '@/lib/session';
-import { sendEvent } from '@/lib/svix';
+// import { sendEvent } from '@/lib/svix';
 import {
   createInvitation,
   deleteInvitation,
@@ -183,7 +183,7 @@ Execution Time: 0.152 ms
     await sendTeamInviteEmail(teamMember.team, invitation);
   }
 
-  await sendEvent(teamMember.teamId, 'invitation.created', invitation);
+  // await sendEvent(teamMember.teamId, 'invitation.created', invitation);
 
   sendAudit({
     action: 'member.invitation.create',
@@ -248,7 +248,7 @@ const handleDELETE = async (req: NextApiRequest, res: NextApiResponse) => {
     team: teamMember.team,
   });
 
-  await sendEvent(teamMember.teamId, 'invitation.removed', invitation);
+  // await sendEvent(teamMember.teamId, 'invitation.removed', invitation);
 
   recordMetric('invitation.removed');
 
@@ -299,7 +299,7 @@ const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
     invitation.role
   );
 
-  await sendEvent(invitation.team.id, 'member.created', teamMember);
+  // await sendEvent(invitation.team.id, 'member.created', teamMember);
 
   if (invitation.sentViaEmail) {
     await deleteInvitation({ token: inviteToken });
