@@ -14,7 +14,12 @@ const EmailDomainMismatch = ({
   emailDomain,
 }: EmailDomainMismatchProps) => {
   const { t } = useTranslation('common');
-  const { allowedDomains } = invitation;
+  const { allowedDomains: allowedDomainsJson } = invitation;
+  const allowedDomains = allowedDomainsJson as string[];
+
+  if (!allowedDomains) {
+    return null;
+  }
 
   const allowedDomainsString =
     allowedDomains.length === 1

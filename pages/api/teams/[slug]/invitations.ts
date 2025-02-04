@@ -280,11 +280,10 @@ const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Make sure the user is logged in with an allowed domain (Join via link)
-  if (!invitation.sentViaEmail && invitation.allowedDomains.length) {
+  const allowedDomains = invitation.allowedDomains as string[];
+  if (!invitation.sentViaEmail && allowedDomains.length) {
     const emailDomain = extractEmailDomain(email);
-    const allowJoin = invitation.allowedDomains.find(
-      (domain) => domain === emailDomain
-    );
+    const allowJoin = allowedDomains.find((domain) => domain === emailDomain);
 
     if (!allowJoin) {
       throw new ApiError(

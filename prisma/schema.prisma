@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 enum Role {
@@ -112,7 +113,8 @@ model Invitation {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
   sentViaEmail   Boolean  @default(true)
-  allowedDomains String[] @default([])
+  /// [StringArray]
+  allowedDomains Json     @default("[]")
 
   user User @relation(fields: [invitedBy], references: [id], onDelete: Cascade)
   team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
@@ -162,7 +164,8 @@ model Subscription {
 model Service {
   id          String   @id @default(uuid())
   description String
-  features    String[]
+  /// [StringArray]
+  features    Json     @default("[]")
   image       String
   name        String
   created     DateTime
@@ -185,7 +188,7 @@ model Price {
 }
 
 model jackson_store {
-  key        String    @id(map: "_jackson_store_key") @db.VarChar(1500)
+  key        String    @id @db.VarChar(384)
   value      String
   iv         String?   @db.VarChar(64)
   tag        String?   @db.VarChar(64)
@@ -195,26 +198,26 @@ model jackson_store {
 
   jackson_index jackson_index[]
 
-  @@index([namespace], map: "_jackson_store_namespace")
+  @@index([namespace])
   @@ignore
 }
 
 model jackson_index {
-  id       Int    @id(map: "_jackson_index_id") @default(autoincrement())
-  key      String @db.VarChar(1500)
-  storeKey String @db.VarChar(1500)
+  id       Int    @id @default(autoincrement())
+  key      String @db.VarChar(384)
+  storeKey String @db.VarChar(384)
 
   store jackson_store @relation(fields: [storeKey], references: [key], onDelete: Cascade, onUpdate: NoAction)
 
-  @@index([key], map: "_jackson_index_key")
-  @@index([key, storeKey], map: "_jackson_index_key_store")
+  @@index([key])
+  @@index([key, storeKey])
   @@ignore
 }
 
 model jackson_ttl {
-  key       String @id(map: "jackson_ttl_key") @db.VarChar(1500)
+  key       String @id @db.VarChar(384)
   expiresAt BigInt
 
-  @@index([expiresAt], map: "_jackson_ttl_expires_at")
+  @@index([expiresAt])
   @@ignore
 }

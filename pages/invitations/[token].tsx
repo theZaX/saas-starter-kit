@@ -38,8 +38,9 @@ const AcceptTeamInvitation: NextPageWithLayout = () => {
     ? authUser?.email === invitation.email
     : false;
 
-  const emailDomainMatch = invitation.allowedDomains.length
-    ? invitation.allowedDomains.includes(emailDomain!)
+  const allowedDomains = invitation.allowedDomains as string[];
+  const emailDomainMatch = allowedDomains.length
+    ? allowedDomains.includes(emailDomain!)
     : true;
 
   const acceptInvite = invitation.sentViaEmail ? emailMatch : emailDomainMatch;
@@ -74,7 +75,7 @@ const AcceptTeamInvitation: NextPageWithLayout = () => {
           {/* User authenticated and email domain doesn not match */}
           {status === 'authenticated' &&
             !invitation.sentViaEmail &&
-            invitation.allowedDomains.length > 0 &&
+            allowedDomains.length > 0 &&
             !emailDomainMatch && (
               <EmailDomainMismatch
                 invitation={invitation}

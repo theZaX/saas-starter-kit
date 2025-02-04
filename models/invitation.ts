@@ -93,10 +93,11 @@ export const createInvitation = async (
     'id' | 'token' | 'expires' | 'createdAt' | 'updatedAt'
   >
 ) => {
-  const data: Omit<Invitation, 'id' | 'createdAt' | 'updatedAt'> = {
+  const data = {
     ...params,
     token: randomUUID(),
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    allowedDomains: params.allowedDomains as string[],
   };
 
   return await prisma.invitation.create({

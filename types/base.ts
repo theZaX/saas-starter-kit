@@ -74,3 +74,13 @@ export interface TeamFeature {
   payments: boolean;
   deleteTeam: boolean;
 }
+
+export type PrismaJsonTypes = {
+  StringArray: string[];
+};
+
+declare module '@prisma/client' {
+  interface PrismaJson {
+    LogMetaType: { timestamp: number; host: string };
+  }
+}
