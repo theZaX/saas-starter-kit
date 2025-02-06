@@ -189,7 +189,7 @@ model Price {
 
 model jackson_store {
   key        String    @id @db.VarChar(384)
-  value      String
+  value      String    @db.LongText
   iv         String?   @db.VarChar(64)
   tag        String?   @db.VarChar(64)
   createdAt  DateTime  @default(now()) @db.Timestamp(6)

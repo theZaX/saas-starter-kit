@@ -17,9 +17,12 @@ const opts = {
   oidcPath: env.jackson.sso.oidcPath,
   samlAudience: env.jackson.sso.issuer,
   db: {
-    engine: 'sql',
-    type: 'postgres',
+    engine: 'planetscale',
+    type: 'mysql',
     url: env.databaseUrl,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   },
   idpDiscoveryPath: '/auth/sso/idp-select',
   idpEnabled: true,

@@ -21,8 +21,8 @@ const jacksonOpts = {
   oidcPath: '/api/oauth/oidc',
   samlAudience: 'https://saml.boxyhq.com',
   db: {
-    engine: 'sql',
-    type: 'postgres',
+    engine: 'planetscale',
+    type: 'mysql',
     url: `${process.env.DATABASE_URL}`,
   },
   idpDiscoveryPath: '/auth/sso/idp-select',
