@@ -12,7 +12,7 @@ export type { OIDCAuthzResponsePayload };
 import env from './env';
 
 const opts = {
-  externalUrl: env.appUrl,
+  externalUrl: env.appUrl || process.env.VERCEL_URL,
   samlPath: env.jackson.sso.path,
   oidcPath: env.jackson.sso.oidcPath,
   samlAudience: env.jackson.sso.issuer,
